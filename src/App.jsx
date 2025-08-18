@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
 import Sidebar from './components/Sidebar';
 import Dashboard from './components/Dashboard';
-import Header from './components/Header'; 
+import Header from './components/Header';
+import Userdetails from './components/Userdetails';
 import './App.css';
 
 function App() {
   const [testData, setTestData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isSidebarOpen, setSidebarOpen] = useState(false); 
+  const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   const toggleSidebar = () => {
     setSidebarOpen(!isSidebarOpen);
@@ -32,16 +34,25 @@ function App() {
   }, []);
 
   return (
-    <div className="app-container">
-      <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
-      <main className="main-content">
-       
-        <Header toggleSidebar={toggleSidebar} />
-        {loading && <p>Loading dashboard...</p>}
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {!loading && !error && <Dashboard data={testData} />}
-      </main>
-    </div>
+    // The Router should wrap the entire application
+    <Router>
+      <div className="app-container">
+        <Sidebar isOpen={isSidebarOpen} toggleSidebar={toggleSidebar} />
+        <main className="main-content">
+          <Header toggleSidebar={toggleSidebar} />
+          {loading && <p>Loading dashboard...</p>}
+          {error && <p style={{ color: 'red' }}>{error}</p>}
+          {!loading && !error && (
+            // The Routes component now correctly sits inside the main content area
+            <Routes>
+              <Route path="/" element={<Dashboard data={testData} />} />
+              {/* Pass the testData to the Userdetails component */}
+              <Route path="/user/:name" element={<Userdetails data={testData} />} />
+            </Routes>
+          )}
+        </main>
+      </div>
+    </Router>
   );
 }
 

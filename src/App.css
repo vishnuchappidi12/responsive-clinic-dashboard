@@ -64,21 +64,20 @@ body {
   padding: 0;
   margin: 0;
 }
-.sidebar-nav li {
+.sidebar-nav li a {
   display: flex;
   align-items: center;
   padding: 12px 15px;
-  margin: 5px 0;
   border-radius: 8px;
-  cursor: pointer;
   color: var(--text-secondary);
   font-weight: 500;
+  text-decoration: none;
 }
-.sidebar-nav li.active, .sidebar-nav li:hover {
+.sidebar-nav li a.active, .sidebar-nav li a:hover {
   background-color: #eef2ff;
   color: var(--accent-blue);
 }
-.sidebar-nav li svg {
+.sidebar-nav li a svg {
   margin-right: 15px;
   font-size: 20px;
 }
@@ -216,12 +215,10 @@ body {
     justify-content: space-around;
     margin-top: 15px;
 }
-
 .chart-legend > div {
     display: flex;
     align-items: center;
 }
-
 .chart-legend .dot {
     width: 10px;
     height: 10px;
@@ -246,6 +243,14 @@ body {
   border-bottom: 1px solid var(--border-color);
 }
 .test-log-item:last-child { border-bottom: none; }
+.patient-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  text-decoration: none;
+  color: inherit;
+}
 .patient-info { display: flex; flex-direction: column; }
 .patient-name { font-weight: 500; }
 .test-time { font-size: 12px; color: var(--text-secondary); }
@@ -283,44 +288,42 @@ body {
 .footer-card p { margin: 5px 0 0; color: var(--text-secondary); }
 .footer-card .total { color: var(--text-secondary); font-weight: normal; }
 
-/* === Responsive Design === */
 
-/* -- Tablet View -- */
+/**************************************************/
+/*********** RESPONSIVE DESIGN SECTION ************/
+/**************************************************/
+
+/* -- Tablet View (screens under 1024px) -- */
 @media (max-width: 1024px) {
-  .sidebar {
-    width: 220px;
-  }
   .analytics-grid {
-    /* On tablets, switch to a 2-column layout for analytics */
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr 1fr;
+  }
+  .test-analytics-card, .test-log-card, .gender-age-card {
+     grid-column: auto; /* Reset desktop grid spans */
   }
   .gender-age-card {
-    /* Span the full width in the 2-column layout */
-    grid-column: 1 / 3;
+    grid-column: 1 / -1; /* Make gender card span full width on tablet */
   }
   .header {
     flex-wrap: wrap;
     gap: 10px;
   }
   .search-bar {
-    order: 3; /* Move search bar to the next line */
+    order: 3;
     width: 100%;
   }
 }
 
-
-/* -- Mobile View -- */
+/* -- Mobile View (screens under 768px) -- */
 @media (max-width: 768px) {
   .app-container {
-    /* On mobile, the container itself doesn't need to be flex */
     display: block;
   }
-
   .main-content {
     padding: 16px;
   }
 
-  /* Mobile Sidebar (Hidden by default) */
+  /* --- Mobile Sidebar (Hidden by default) --- */
   .sidebar {
     position: fixed;
     left: 0;
@@ -331,12 +334,9 @@ body {
     transition: transform 0.3s ease-in-out;
     box-shadow: 4px 0px 15px rgba(0,0,0,0.1);
   }
-
   .sidebar.is-open {
     transform: translateX(0);
   }
-
-  /* Show a close button inside the sidebar on mobile */
   .sidebar-close-btn {
     display: block;
     position: absolute;
@@ -348,12 +348,12 @@ body {
     cursor: pointer;
   }
 
-  /* Mobile Header */
+  /* --- Mobile Header --- */
   .header {
     align-items: center;
   }
   .menu-btn {
-    display: block; /* Show the hamburger menu button */
+    display: block;
     background: none;
     border: none;
     font-size: 24px;
@@ -364,20 +364,29 @@ body {
     font-size: 18px;
   }
   .search-bar {
-    display: none; /* Hide search bar on small screens as per design */
+    display: none;
   }
 
-  /* Stack all grid items vertically */
-  .stats-grid,
-  .analytics-grid {
-    grid-template-columns: 1fr;
-  }
+  /* --- THIS IS THE CORRECTED SECTION FOR MOBILE GRIDS --- */
   
-  .gender-age-card {
-    grid-column: auto; /* Reset column span */
+  /* Top stats grid (date and bar chart) */
+  .stats-grid {
+    grid-template-columns: 1fr; /* Stack the top cards vertically */
+    gap: 16px;
+  }
+  .date-card, .chart-card {
+    grid-column: auto; /* Reset any desktop-specific column spans */
   }
 
-  /* Footer adjustments */
+  /* Main analytics grid (donut, log, gender) */
+  .analytics-grid {
+    grid-template-columns: 1fr; /* Stack all main cards vertically */
+  }
+  .test-analytics-card, .test-log-card, .gender-age-card {
+     grid-column: auto; /* Reset desktop spans */
+  }
+
+  /* --- Footer Fixes --- */
   .footer-stats {
     flex-direction: column;
     align-items: flex-start;
@@ -388,12 +397,9 @@ body {
     flex-direction: column;
     gap: 15px;
   }
-  .footer-card {
-    width: auto;
-  }
 }
 
-/* -- Default hidden for mobile-only elements -- */
+/* Default hidden for mobile-only elements */
 .menu-btn,
 .sidebar-close-btn {
   display: none;
