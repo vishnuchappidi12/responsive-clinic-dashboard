@@ -1,0 +1,92 @@
+/* Test Log Styles */
+.test-log-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 30px;
+  margin-bottom: 10px;
+}
+
+.test-log-header h3 {
+  margin: 0;
+  font-size: 18px;
+}
+
+.test-log-header a {
+  color: var(--accent-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.test-log-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 10px;
+}
+
+.test-log-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.test-log-item:last-child {
+  border-bottom: none;
+}
+
+.patient-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.patient-name {
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--text-primary);
+}
+
+.test-time {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+
+.patient-score {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.score-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .test-log-item {
+    padding: 10px 0;
+  }
+
+  .patient-name {
+    font-size: 13px;
+  }
+
+  .test-time {
+    font-size: 11px;
+  }
+
+  .patient-score {
+    font-size: 13px;
+  }
+
+  .score-dot {
+    width: 6px;
+    height: 6px;
+  }
+}

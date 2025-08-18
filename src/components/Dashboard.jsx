@@ -13,7 +13,7 @@ const Dashboard = ({ data }) => {
       <StatsCards totalTests={data.length} />
       <div className="analytics-grid">
         <TestAnalytics data={data} />
-        <TestLog data={data} />
+        {/* <TestLog data={data} /> */}
         <GenderAgeAnalytics />
       </div>
       <FooterStats />

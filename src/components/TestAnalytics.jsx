@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Link } from 'react-router-dom';
+import './TestAnalytics.css';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -54,6 +55,7 @@ const TestAnalytics = ({ data }) => {
 
   return (
     <div className="card combined-analytics-card">
+      {/* --- Chart Section --- */}
       <h3>Employees Test Analytics</h3>
       <select value={selectedScore} onChange={(e) => setSelectedScore(e.target.value)}>
         <option value="liver_score">Fat Metabolism Score</option>
@@ -76,24 +78,24 @@ const TestAnalytics = ({ data }) => {
         <div><span className="dot poor"></span>Poor: {analyticsData.Poor}</div>
       </div>
 
+      {/* --- Test Log Section (now inside the same card) --- */}
       <div className="test-log-header">
         <h3>Test log</h3>
         <Link to="/test-history">See All </Link>
       </div>
       <ul className="test-log-list">
         {recentTests.map((test, index) => (
-          // The structure inside this 'li' is the only part that changed
           <li key={index} className="test-log-item">
-            <div className="test-log-item-top">
+            <div className="patient-info">
               <span className="patient-name">{test.name}</span>
-              <div className="patient-score">
-                <span className="score-dot" style={{ backgroundColor: getStatusColor(test.liver_score) }}></span>
-                <span>{test.liver_score}%</span>
-              </div>
+              <span className="test-time">
+                {new Date(test.date_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+              </span>
             </div>
-            <span className="test-time">
-              {new Date(test.date_time).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
-            </span>
+            <div className="patient-score">
+              <span className="score-dot" style={{ backgroundColor: getStatusColor(test.liver_score) }}></span>
+              <span>{test.liver_score}%</span>
+            </div>
           </li>
         ))}
       </ul>
